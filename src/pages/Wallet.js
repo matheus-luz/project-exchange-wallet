@@ -2,38 +2,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-// import { requestAPIMoney, salveFormSpent } from '../actions';
+import { requestAPIMoney, salveFormSpent } from '../actions';
 
-// import ButtonAdd from '../components/ButtonAdd';
-// import Select from '../components/Select';
-// import SelectCoins from '../components/SelectCoins.jsx';
-// import SelectMethod from '../components/SelectMethod';
 import Input from '../components/Input';
 import SelectCoins from '../components/SelectCoins';
 import SelectMethod from '../components/SelectMethod';
+import Select from '../components/Select';
+import Button from '../components/Button';
 
 class Wallet extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      // id: 0,
+      id: 0,
       value: 0,
       description: '',
       currency: '',
       method: '',
-      // tag: '',
+      tag: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  // async componentDidMount() {
-  //   const { fetchMoney } = this.props;
-  //   const response = await fetchMoney();
-  //   return response;
-  // }
+  async componentDidMount() {
+    const { fetchMoney } = this.props;
+    const response = await fetchMoney();
+    return response;
+  }
 
   handleChange({ target }) {
     this.setState({
@@ -41,33 +39,33 @@ class Wallet extends React.Component {
     });
   }
 
-  // async handleClick() {
-  //   const { id, value, description, currency, method, tag } = this.state;
+  async handleClick() {
+    const { id, value, description, currency, method, tag } = this.state;
 
-  //   const { inputForm, fetchMoney } = this.props;
-  //   const response = await fetchMoney();
-  //   const data = await response.payload;
-  //   const exchangeRates = data.filter((money) => (
-  //     money !== 'USDT'));
+    const { submitForms, fetchMoney } = this.props;
+    const response = await fetchMoney();
+    const data = await response.payload;
+    const exchangeRates = data.filter((money) => (
+      money !== 'USDT'));
 
-  //   console.log(exchangeRates);
+    console.log(exchangeRates);
 
-  //   this.setState((prevState) => ({ id: prevState.id + 1 }));
+    this.setState((prevState) => ({ id: prevState.id + 1 }));
 
-  //   inputForm({ id, value, description, currency, method, tag });
+    submitForms({ id, value, description, currency, method, tag, exchangeRates });
 
-  //   this.setState({
-  //     value: 0,
-  //     description: '',
-  //     currency: '',
-  //     method: '',
-  //     tag: '',
-  //   });
-  // }
+    this.setState({
+      value: 0,
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
+    });
+  }
 
   render() {
-    const { userEmail } = this.props;
-    const { value, description, currency, method } = this.state;
+    const { userEmail, currencies } = this.props;
+    const { value, description, currency, method, tag } = this.state;
     return (
       <header>
         <h3 data-testid="email-field">{ userEmail }</h3>
@@ -82,18 +80,22 @@ class Wallet extends React.Component {
           />
           <span data-testid="total-field">{ value }</span>
           <span data-testid="header-currency-field">BRL</span>
-          {/* <SelectCoins
-            labelhtmlfor="moeda"
+          <SelectCoins
             description="Moeda"
-            // currencies={ currencies }
+            currencies={ currencies }
+            datatestid="currency-input"
             value={ currency }
             onChange={ this.handleChange }
           />
-          <SelectMethod value={ method } onChange={ this.handleChange } /> */}
-          {/* <Select
+          <SelectMethod
+            value={ method }
+            onChange={ this.handleChange }
+            datatestid="method-input"
+          />
+          <Select
             value={ tag }
             onChange={ this.handleChange }
-          /> */}
+          />
           <label htmlFor="descrição">
             Descrição:
             <input
@@ -104,7 +106,7 @@ class Wallet extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
-          {/* <ButtonAdd onClick={ () => {} } /> */}
+          <Button onClick={ this.handleClick } />
         </form>
       </header>
     );
@@ -117,6 +119,12 @@ Wallet.propTypes = {
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
+  currencies: state.wallet.currencies,
 });
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  fetchMoney: () => dispatch(requestAPIMoney()),
+  submitForms: (state) => dispatch(salveFormSpent(state)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

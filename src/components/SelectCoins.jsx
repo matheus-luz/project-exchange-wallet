@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 
 class SelectCoins extends Component {
   render() {
-    const { labelhtmlfor, description, currencies, value, onChange } = this.props;
+    const { datatestid, description, currencies, value, onChange } = this.props;
     return (
       <section>
-        <label htmlFor={ labelhtmlfor }>
+        <label htmlFor={ description }>
           { description }
           <select
-            id={ labelhtmlfor }
+            id={ description }
+            data-testid={ datatestid }
             name="currency"
             value={ value }
             onChange={ onChange }
@@ -27,8 +28,8 @@ class SelectCoins extends Component {
 }
 
 SelectCoins.propTypes = {
-  labelhtmlfor: PropTypes.string,
   description: PropTypes.string,
+  datatestid: PropTypes.string,
 }.isRequired;
 
 export default SelectCoins;
