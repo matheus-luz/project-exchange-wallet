@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 // import SelectCoins from '../components/SelectCoins.jsx';
 // import SelectMethod from '../components/SelectMethod';
 import Input from '../components/Input';
+import SelectCoins from '../components/SelectCoins';
+import SelectMethod from '../components/SelectMethod';
 
 class Wallet extends React.Component {
   constructor() {
@@ -17,9 +19,9 @@ class Wallet extends React.Component {
     this.state = {
       // id: 0,
       value: 0,
-      // description: '',
-      // currency: '',
-      // method: '',
+      description: '',
+      currency: '',
+      method: '',
       // tag: '',
     };
 
@@ -65,7 +67,7 @@ class Wallet extends React.Component {
 
   render() {
     const { userEmail } = this.props;
-    const { value } = this.state;
+    const { value, description, currency, method } = this.state;
     return (
       <header>
         <h3 data-testid="email-field">{ userEmail }</h3>
@@ -83,26 +85,26 @@ class Wallet extends React.Component {
           {/* <SelectCoins
             labelhtmlfor="moeda"
             description="Moeda"
-            currencies={ currencies }
+            // currencies={ currencies }
             value={ currency }
             onChange={ this.handleChange }
           />
-          <SelectMethod value={ method } onChange={ this.handleChange } />
-          <Select
+          <SelectMethod value={ method } onChange={ this.handleChange } /> */}
+          {/* <Select
             value={ tag }
             onChange={ this.handleChange }
-          />
+          /> */}
           <label htmlFor="descrição">
             Descrição:
             <input
               type="text"
-              id="descrição"
+              data-testid="description-input"
               name="description"
               value={ description }
               onChange={ this.handleChange }
             />
           </label>
-          <ButtonAdd onClick={ () => {} } /> */}
+          {/* <ButtonAdd onClick={ () => {} } /> */}
         </form>
       </header>
     );

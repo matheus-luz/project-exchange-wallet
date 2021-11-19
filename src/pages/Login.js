@@ -36,14 +36,19 @@ class Login extends React.Component {
   handlePassword({ target }) {
     this.setState({
       password: target.value,
+    }, () => {
+      const { password, email } = this.state;
+      const NUMBER_FIVE = 6;
+      if (password.length >= NUMBER_FIVE && this.ValidarEmail(email)) {
+        this.setState({
+          disabled: false,
+        });
+      } else {
+        this.setState({
+          disabled: true,
+        });
+      }
     });
-    const { password, email } = this.state;
-    const NUMBER_FIVE = 5;
-    if (password.length >= NUMBER_FIVE && this.ValidarEmail(email)) {
-      this.setState({
-        disabled: false,
-      });
-    }
   }
 
   handleClick() {
