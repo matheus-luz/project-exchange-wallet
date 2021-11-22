@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   expenses: [],
 };
 
-const user = (state = INITIAL_STATE, action) => {
+const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case GET_MONEY:
     return {
@@ -30,4 +30,4 @@ const user = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default user;
+export default wallet;

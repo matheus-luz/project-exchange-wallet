@@ -9,6 +9,8 @@ import SelectCoins from '../components/SelectCoins';
 import SelectMethod from '../components/SelectMethod';
 import Select from '../components/Select';
 import Button from '../components/Button';
+import PersonalData from '../components/PersonalData';
+import TableExpenses from '../components/TableExpenses';
 
 class Wallet extends React.Component {
   constructor() {
@@ -45,10 +47,8 @@ class Wallet extends React.Component {
     const { submitForms, fetchMoney } = this.props;
     const response = await fetchMoney();
     const data = await response.payload;
-    const exchangeRates = data.filter((money) => (
-      money !== 'USDT'));
-
-    console.log(exchangeRates);
+    delete data.USDT;
+    const exchangeRates = data;
 
     this.setState((prevState) => ({ id: prevState.id + 1 }));
 
@@ -64,22 +64,20 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { userEmail, currencies } = this.props;
+    const { userEmail, currencies, expenses } = this.props;
     const { value, description, currency, method, tag } = this.state;
     return (
       <header>
-        <h3 data-testid="email-field">{ userEmail }</h3>
+        <PersonalData expenses={ expenses } userEmail={ userEmail } value={ value } />
         <form>
-          Valor:
           <Input
+            description="Valor"
             type="number"
             datatestid="value-input"
             name="value"
             value={ value }
             onChange={ this.handleChange }
           />
-          <span data-testid="total-field">{ value }</span>
-          <span data-testid="header-currency-field">BRL</span>
           <SelectCoins
             description="Moeda"
             currencies={ currencies }
@@ -96,18 +94,17 @@ class Wallet extends React.Component {
             value={ tag }
             onChange={ this.handleChange }
           />
-          <label htmlFor="descrição">
-            Descrição:
-            <input
-              type="text"
-              data-testid="description-input"
-              name="description"
-              value={ description }
-              onChange={ this.handleChange }
-            />
-          </label>
+          <Input
+            description="description"
+            type="text"
+            datatestid="description-input"
+            name="description"
+            value={ description }
+            onChange={ this.handleChange }
+          />
           <Button onClick={ this.handleClick } />
         </form>
+        <TableExpenses />
       </header>
     );
   }
@@ -120,6 +117,7 @@ Wallet.propTypes = {
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
   currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
