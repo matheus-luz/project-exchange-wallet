@@ -14,7 +14,7 @@ class InfoPerson extends Component {
     if (expenses.length >= 1) {
       const total = expenses.reduce((acc, curr) => {
         const changeCurrency = curr.value * curr.exchangeRates[curr.currency].ask;
-        return Number(acc) + Number(changeCurrency).toFixed(2);
+        return Number(acc + changeCurrency).toFixed(2);
       }, 0);
       return total;
     }
