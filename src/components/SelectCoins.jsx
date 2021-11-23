@@ -9,6 +9,7 @@ class SelectCoins extends Component {
         <label htmlFor={ description }>
           { description }
           <select
+            variant="success"
             id={ description }
             data-testid={ datatestid }
             name="currency"
@@ -17,7 +18,7 @@ class SelectCoins extends Component {
           >
             {
               currencies.map((category) => (
-                <option key={ category }>{ category }</option>
+                <option value={ category } key={ category }>{ category }</option>
               ))
             }
           </select>

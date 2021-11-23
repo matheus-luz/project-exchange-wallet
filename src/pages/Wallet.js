@@ -2,15 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import '../App.css';
+
 import { requestAPIMoney, salveFormSpent } from '../actions';
 
 import Input from '../components/Input';
 import SelectCoins from '../components/SelectCoins';
 import SelectMethod from '../components/SelectMethod';
 import Select from '../components/Select';
-import Button from '../components/Button';
-import PersonalData from '../components/PersonalData';
+import ButtonSubmit from '../components/ButtonSubmit';
 import TableExpenses from '../components/TableExpenses';
+import InfoPerson from '../components/InfoPerson';
 
 class Wallet extends React.Component {
   constructor() {
@@ -18,10 +20,10 @@ class Wallet extends React.Component {
 
     this.state = {
       id: 0,
-      value: 0,
+      value: '0',
       description: '',
-      currency: '',
-      method: '',
+      currency: 'USD',
+      method: 'Dinheiro',
       tag: '',
     };
 
@@ -55,54 +57,54 @@ class Wallet extends React.Component {
     submitForms({ id, value, description, currency, method, tag, exchangeRates });
 
     this.setState({
-      value: 0,
+      value: '0',
       description: '',
-      currency: '',
-      method: '',
       tag: '',
     });
   }
 
   render() {
-    const { userEmail, currencies, expenses } = this.props;
+    const { currencies } = this.props;
     const { value, description, currency, method, tag } = this.state;
     return (
       <header>
-        <PersonalData expenses={ expenses } userEmail={ userEmail } value={ value } />
+        <InfoPerson />
         <form>
-          <Input
-            description="Valor"
-            type="number"
-            datatestid="value-input"
-            name="value"
-            value={ value }
-            onChange={ this.handleChange }
-          />
-          <SelectCoins
-            description="Moeda"
-            currencies={ currencies }
-            datatestid="currency-input"
-            value={ currency }
-            onChange={ this.handleChange }
-          />
-          <SelectMethod
-            value={ method }
-            onChange={ this.handleChange }
-            datatestid="method-input"
-          />
-          <Select
-            value={ tag }
-            onChange={ this.handleChange }
-          />
-          <Input
-            description="description"
-            type="text"
-            datatestid="description-input"
-            name="description"
-            value={ description }
-            onChange={ this.handleChange }
-          />
-          <Button onClick={ this.handleClick } />
+          <div className="form-inputs">
+            <Input
+              description="Valor"
+              type="number"
+              datatestid="value-input"
+              name="value"
+              value={ value }
+              onChange={ this.handleChange }
+            />
+            <SelectCoins
+              description="Moeda"
+              currencies={ currencies }
+              datatestid="currency-input"
+              value={ currency }
+              onChange={ this.handleChange }
+            />
+            <SelectMethod
+              value={ method }
+              onChange={ this.handleChange }
+              datatestid="method-input"
+            />
+            <Select
+              value={ tag }
+              onChange={ this.handleChange }
+            />
+            <Input
+              description="description"
+              type="text"
+              datatestid="description-input"
+              name="description"
+              value={ description }
+              onChange={ this.handleChange }
+            />
+            <ButtonSubmit onClick={ this.handleClick } />
+          </div>
         </form>
         <TableExpenses />
       </header>

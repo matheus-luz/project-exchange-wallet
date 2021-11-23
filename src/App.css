@@ -3,6 +3,24 @@
   text-align: center;
 }
 
+.form-inputs {
+  display: flex;
+  justify-content: space-around;
+}
+
+.tableAdd {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.person-info {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px;
+  border: 1px solid black;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

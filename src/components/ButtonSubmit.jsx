@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class Button extends Component {
+class ButtonSubmit extends Component {
   render() {
     const { onClick } = this.props;
     return (
       <section>
         <button
+          variant="primary"
           type="button"
           onClick={ onClick }
         >
@@ -17,8 +18,8 @@ class Button extends Component {
   }
 }
 
-Button.propTypes = {
+ButtonSubmit.propTypes = {
   onclick: PropTypes.func,
 }.isRequired;
 
-export default Button;
+export default ButtonSubmit;

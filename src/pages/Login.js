@@ -64,6 +64,7 @@ class Login extends React.Component {
     return (
       <div className="App">
         <Input
+          description="Email:"
           datatestid="email-input"
           type="email"
           name="email"
@@ -71,6 +72,7 @@ class Login extends React.Component {
           onChange={ this.handleChange }
         />
         <Input
+          description="Password:"
           datatestid="password-input"
           type="password"
           name="password"
