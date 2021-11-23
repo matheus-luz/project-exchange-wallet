@@ -32,13 +32,13 @@ export const salveInput = (payload) => ({ type: GET_INPUTFORM, payload });
 export const moneyForm = (payload) => ({ type: GET_MONEY_FORMS, payload });
 
 export function salveFormSpent(payload) {
-  return (dispatch) => {
-    dispatch(salveInput(payload));
-    return fetch('https://economia.awesomeapi.com.br/json/all')
-      .then((response) => response.json()
-        .then(
-          (data) => dispatch(moneyForm(data)),
-        ),
-      (error) => dispatch(failedRequest(error)));
-  };
+  return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((response) => response.json()
+      .then(
+        (data) => {
+          dispatch(salveInput({ ...payload, exchangeRates: data }));
+          dispatch(getMoney(data));
+        },
+      ),
+    (error) => dispatch(failedRequest(error)));
 }

@@ -20,7 +20,7 @@ class Wallet extends React.Component {
 
     this.state = {
       id: 0,
-      value: '0',
+      value: 0,
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
@@ -46,15 +46,15 @@ class Wallet extends React.Component {
   async handleClick() {
     const { id, value, description, currency, method, tag } = this.state;
 
-    const { submitForms, fetchMoney } = this.props;
-    const response = await fetchMoney();
-    const data = await response.payload;
-    delete data.USDT;
-    const exchangeRates = data;
+    const { submitForms } = this.props;
+    // const response = await fetchMoney();
+    // const data = await response.payload;
+    // delete data.USDT;
+    // const exchangeRates = data;
 
     this.setState((prevState) => ({ id: prevState.id + 1 }));
 
-    submitForms({ id, value, description, currency, method, tag, exchangeRates });
+    submitForms({ id, value, description, currency, method, tag, exchangeRates: {} });
 
     this.setState({
       value: '0',
