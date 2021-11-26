@@ -3,33 +3,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class TableExpenses extends Component {
-  constructor(props) {
-    super(props);
-
-    this.tableAddExpenses = this.tableAddExpenses.bind(this);
-  }
-
-  tableAddExpenses() {
-    const { expenses } = this.props;
-    if (expenses.length >= 1) {
-      expenses.map((expense) => (
-        <tbody key={ expense.id }>
-          <tr>
-            <th>{expense.value}</th>
-            <th>{expense.tag}</th>
-            <th>{expense.method}</th>
-            <th>{expense.method}</th>
-          </tr>
-        </tbody>
-      ));
-    }
-  }
-
   render() {
+    const { expenses } = this.props;
     return (
       <section className="tableAdd">
         <table>
-          <thead>
+          <tbody>
             <tr>
               <th>Descrição</th>
               <th>Tag</th>
@@ -41,8 +20,29 @@ class TableExpenses extends Component {
               <th>Moeda de conversão</th>
               <th>Editar/Excluir</th>
             </tr>
-            { this.tableAddExpenses() }
-          </thead>
+            { expenses.length > 0
+               && expenses.map((expense) => (
+                 <tr key={ expense.id }>
+                   <td>{expense.description}</td>
+                   <td>{expense.tag}</td>
+                   <td>{expense.method}</td>
+                   <td>{expense.value}</td>
+                   <td>{expense.exchangeRates[expense.currency].name}</td>
+                   <td>
+                     {
+                       Number(expense.exchangeRates[expense.currency].ask).toFixed(2)
+                     }
+
+                   </td>
+                   <td>
+                     { (
+                       expense
+                         .exchangeRates[expense.currency].ask * expense.value).toFixed(2)}
+                   </td>
+                   <td>Real</td>
+                 </tr>
+               )) }
+          </tbody>
         </table>
       </section>
     );
@@ -50,7 +50,7 @@ class TableExpenses extends Component {
 }
 
 TableExpenses.propTypes = {
-  expenses: PropTypes.arrayOf(PropTypes.object),
+  expenses: PropTypes.arrayOf(),
 }.isRequired;
 
 const mapStateToProps = (state) => ({

@@ -47,10 +47,6 @@ class Wallet extends React.Component {
     const { id, value, description, currency, method, tag } = this.state;
 
     const { submitForms } = this.props;
-    // const response = await fetchMoney();
-    // const data = await response.payload;
-    // delete data.USDT;
-    // const exchangeRates = data;
 
     this.setState((prevState) => ({ id: prevState.id + 1 }));
 
@@ -113,7 +109,9 @@ class Wallet extends React.Component {
 }
 
 Wallet.propTypes = {
-  userEmail: PropTypes.string,
+  currencies: PropTypes.any,
+  fetchMoney: PropTypes.func,
+  submitForms: PropTypes.func,
 }.isRequired;
 
 const mapStateToProps = (state) => ({

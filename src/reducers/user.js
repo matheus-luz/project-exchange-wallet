@@ -6,16 +6,13 @@ const INITIAL_STATE = {
   email: '',
 };
 
-const user = (state = INITIAL_STATE, action) => {
+function user(state = INITIAL_STATE, action) {
   switch (action.type) {
   case SET_EMAIL_VALUE:
-    return {
-      ...state,
-      email: action.payload,
-    };
+    return ({ ...state, email: action.payload });
   default:
-    return state;
+    return ({ ...state });
   }
-};
+}
 
 export default user;

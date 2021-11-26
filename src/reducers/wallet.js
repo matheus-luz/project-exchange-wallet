@@ -6,28 +6,30 @@ const INITIAL_STATE = {
   expenses: [],
 };
 
-const wallet = (state = INITIAL_STATE, action) => {
+function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
   case GET_MONEY:
-    return {
+    return ({
       ...state,
       currencies: Object.keys(action.payload)
         .filter((money) => money !== 'USDT'),
       exchangeRates: action.payload,
-    };
+    });
   case FAILED_REQUEST:
-    return {
+    return ({
       ...state,
       error: action.error,
-    };
+    });
+
   case GET_INPUTFORM:
-    return {
+    return ({
       ...state,
       expenses: [...state.expenses, action.payload],
-    };
+    });
+
   default:
-    return state;
+    return ({ ...state });
   }
-};
+}
 
 export default wallet;
