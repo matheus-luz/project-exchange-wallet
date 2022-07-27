@@ -33,8 +33,8 @@ class Wallet extends React.Component {
 
   async componentDidMount() {
     const { fetchMoney } = this.props;
-    const response = await fetchMoney();
-    return response;
+    await fetchMoney();
+    console.log(await fetchMoney());
   }
 
   handleChange({ target }) {
